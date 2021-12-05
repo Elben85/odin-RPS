@@ -1,0 +1,82 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: cyan;
+    font-size: 25px;
+}
+
+body div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+.player {
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.option {
+    column-gap: 10px;
+    padding: 10px;
+    background: black;
+}
+
+.option div {
+    background: white;
+    padding: 10px;
+}
+
+.results {
+    min-height: 4 5px;
+    padding: 10px;
+}
+
+.computer{
+    height: 210px;
+    column-gap: 20px;
+    padding: 20px;
+    border: 5px solid black;
+    justify-content: flex-start;
+    min-width: 600px;
+    background: black;
+}
+
+.show_comp{
+    padding: 10px;
+    background: white;
+}
+
+.comp_text {
+    margin-left: auto;
+    align-self: stretch;
+    flex: 1 0;
+    justify-self: stretch;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    row-gap: 20px;
+}
+
+
+
+.comp_text div{
+    background: white;
+    align-self: stretch;
+    padding: 5px;
+}
+
+.comp_move{
+    flex: 1 1;
+}
