@@ -90,6 +90,7 @@ function round(playerSelection) {
         } else if (computer_life === 0) {
             const tempButton = document.createElement("button");
             tempButton.textContent = "Play Again";
+            tempButton.addEventListener("click", reset);
             tempButton.className = "temp";
             retryButton.appendChild(tempButton);
             showGameResult.textContent = "Oh wow you win against a computer";
