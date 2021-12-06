@@ -38,8 +38,23 @@ const showCompLife = document.getElementById("comp_life");
 const showCompPlay = document.getElementById("comp_play");
 const showCompMove = document.getElementsByClassName("comp_move")[0];
 const showResult = document.getElementById("result");
+const showGameResult = document.getElementById("game_result");
+const retryButton = document.getElementById("retry");
 showPlayerLife.textContent = `: ${player_life}`;
 showCompLife.textContent = `: ${computer_life}`;
+
+function reset(){
+    player_life = 5;
+    computer_life = 5;
+    showPlayerLife.textContent = `: ${player_life}`;
+    showCompLife.textContent = `: ${computer_life}`;
+    showCompMove.textContent = "";
+    showResult.textContent = "";
+    showGameResult.textContent = "";
+    showCompPlay.removeAttribute('src');
+    document.getElementsByClassName("temp")[0].removeEventListener("click", reset);
+    document.getElementsByClassName("temp")[0].remove();
+}
 
 function round(playerSelection) {
     if (check_life()) {
@@ -63,6 +78,21 @@ function round(playerSelection) {
         } else if (result === "You won the round") {
             computer_life--;
             showCompLife.textContent = `: ${computer_life}`;
+        }
+
+        if(player_life === 0){
+            const tempButton = document.createElement("button");
+            tempButton.textContent = "Play Again";
+            tempButton.addEventListener("click", reset);
+            tempButton.className = "temp";
+            retryButton.appendChild(tempButton);
+            showGameResult.textContent = "Imagine Losing to a computer";
+        } else if (computer_life === 0){
+            const tempButton = document.createElement("button");
+            tempButton.textContent = "Play Again";
+            tempButton.className = "temp";
+            retryButton.appendChild(tempButton);
+            showGameResult.textContent = "Oh wow you win against a computer";
         }
     }
 }

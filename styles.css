@@ -5,6 +5,8 @@ body {
     justify-content: center;
     background: cyan;
     font-size: 25px;
+    row-gap: 20px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 body div {
@@ -24,12 +26,20 @@ h1 {
 
 .player {
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 10px;
+    background: black;
+    padding: 10px;
+}
+
+.player * {
+    padding: 3px;
+    background: white;
+    align-self: stretch;
+    justify-content: center;
 }
 
 .option {
     column-gap: 10px;
-    padding: 10px;
     background: black;
 }
 
@@ -39,14 +49,17 @@ h1 {
 }
 
 .results {
-    min-height: 4 5px;
+    min-height: 80px;
+    min-width: 320px;
     padding: 10px;
+    background: white;
+    border: 10px solid black;
 }
 
 .computer{
     height: 210px;
-    column-gap: 20px;
-    padding: 20px;
+    column-gap: 15px;
+    padding: 15px;
     border: 5px solid black;
     justify-content: flex-start;
     min-width: 600px;
@@ -66,7 +79,7 @@ h1 {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    row-gap: 20px;
+    row-gap: 15px;
 }
 
 
@@ -79,4 +92,31 @@ h1 {
 
 .comp_move{
     flex: 1 1;
+}
+
+.end_game{
+    flex-direction: column;
+}
+
+button{
+    width: fit-content;
+    font-size: 40px;
+    color: white;
+    background: black;
+    border: 5px solid white;
+    padding: 10px;
+}
+
+#game_result{
+    font-size: 30px;
+    text-align: center;
+    min-width: 570px;
+    min-height: 35px;
+    background: white;
+    padding: 10px;
+    border: 10px solid black;
+}
+
+button:hover{
+    cursor: pointer;
 }
