@@ -43,7 +43,7 @@ const retryButton = document.getElementById("retry");
 showPlayerLife.textContent = `: ${player_life}`;
 showCompLife.textContent = `: ${computer_life}`;
 
-function reset(){
+function reset() {
     player_life = 5;
     computer_life = 5;
     showPlayerLife.textContent = `: ${player_life}`;
@@ -61,15 +61,15 @@ function round(playerSelection) {
         const comp_move = computerPlay();
         const result = playRound(playerSelection, comp_move);
 
-        if(comp_move === "rock"){
+        if (comp_move === "rock") {
             showCompPlay.src = "image/rock.jpg";
-        } else if (comp_move === "paper"){
+        } else if (comp_move === "paper") {
             showCompPlay.src = "image/paper.jpg";
-        } else{
+        } else {
             showCompPlay.src = "image/scissors.jpg"
         }
 
-        showCompMove.textContent = `Computer chose ${comp_move}`;  
+        showCompMove.textContent = `Computer chose ${comp_move}`;
 
         showResult.textContent = result;
         if (result === "Computer won the round") {
@@ -80,14 +80,14 @@ function round(playerSelection) {
             showCompLife.textContent = `: ${computer_life}`;
         }
 
-        if(player_life === 0){
+        if (player_life === 0) {
             const tempButton = document.createElement("button");
             tempButton.textContent = "Play Again";
             tempButton.addEventListener("click", reset);
             tempButton.className = "temp";
             retryButton.appendChild(tempButton);
             showGameResult.textContent = "Imagine Losing to a computer";
-        } else if (computer_life === 0){
+        } else if (computer_life === 0) {
             const tempButton = document.createElement("button");
             tempButton.textContent = "Play Again";
             tempButton.className = "temp";

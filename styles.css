@@ -56,7 +56,7 @@ h1 {
     border: 10px solid black;
 }
 
-.computer{
+.computer {
     height: 210px;
     column-gap: 15px;
     padding: 15px;
@@ -66,7 +66,7 @@ h1 {
     background: black;
 }
 
-.show_comp{
+.show_comp {
     padding: 10px;
     background: white;
 }
@@ -84,21 +84,21 @@ h1 {
 
 
 
-.comp_text div{
+.comp_text div {
     background: white;
     align-self: stretch;
     padding: 5px;
 }
 
-.comp_move{
+.comp_move {
     flex: 1 1;
 }
 
-.end_game{
+.end_game {
     flex-direction: column;
 }
 
-button{
+button {
     width: fit-content;
     font-size: 40px;
     color: white;
@@ -107,7 +107,7 @@ button{
     padding: 10px;
 }
 
-#game_result{
+#game_result {
     font-size: 30px;
     text-align: center;
     min-width: 570px;
@@ -117,6 +117,6 @@ button{
     border: 10px solid black;
 }
 
-button:hover{
+button:hover {
     cursor: pointer;
 }
