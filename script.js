@@ -1,33 +1,40 @@
-const rock = 0;
-const paper = 1;
-const scissors = 2;
-const draw = 0;
-const computerWin = 1;
-const playerWin = 2;
+const ROCK = 0;
+const PAPER = 1;
+const SCISSORS = 2;
+const DRAW = 0;
+const COMPUTER_WIN = 1;
+const PLAYER_WIN = 2;
 
 function computerPlay() {
     return Math.floor(3 * Math.random());
 }
 
 function playRound(playerSelection, computerSelection) {
-    const difference = computerSelection - playerSelection;
-    return difference - Math.floor(difference / 3) * 3;
+    if (playerSelection === computerSelection) {
+        return DRAW;
+    } else if (playerSelection === ROCK) {
+        return computerSelection === PAPER ? COMPUTER_WIN : PLAYER_WIN;
+    } else if (playerSelection === PAPER) {
+        return computerSelection === SCISSORS ? COMPUTER_WIN : PLAYER_WIN;
+    } else {
+        return computerSelection === ROCK ? COMPUTER_WIN : PLAYER_WIN;
+    }
 }
 
 function getResultText(result) {
-    if (result === draw) {
+    if (result === DRAW) {
         return "Draw, try again";
-    } else if (result === computerWin) {
+    } else if (result === COMPUTER_WIN) {
         return "Computer won the round";
     } else {
         return "You won the round";
     }
 }
 
-function getComputerMove(move) {
-    if (move === rock) {
+function getDisplayedComputerMove(move) {
+    if (move === ROCK) {
         return "rock";
-    } else if (move === paper) {
+    } else if (move === PAPER) {
         return "paper";
     } else {
         return "scissors"
@@ -39,12 +46,12 @@ function isGameOver() {
 }
 
 function deductLife(result) {
-    if (result === computerWin) {
+    if (result === COMPUTER_WIN) {
         playerLife--;
-        showPlayerLife.textContent = `: ${playerLife}`;
-    } else if (result === playerWin) {
+        playerLifePanel.textContent = `: ${playerLife}`;
+    } else if (result === PLAYER_WIN) {
         computerLife--;
-        showCompLife.textContent = `: ${computerLife}`;
+        compLifePanel.textContent = `: ${computerLife}`;
     }
 }
 
@@ -53,66 +60,67 @@ let computerLife = 5;
 const rockImg = document.getElementsByClassName("rock")[0];
 const paperImg = document.getElementsByClassName("paper")[0];
 const scissorsImg = document.getElementsByClassName("scissors")[0];
-const showPlayerLife = document.getElementById("your_life");
-const showCompLife = document.getElementById("comp_life");
-const showCompPlay = document.getElementById("comp_play");
-const showCompMove = document.getElementsByClassName("comp_move")[0];
-const showResult = document.getElementById("result");
-const showAfterGame = document.getElementsByClassName("end_game")[0];
+const playerLifePanel = document.getElementById("your_life");
+const compLifePanel = document.getElementById("comp_life");
+const compMoveImgPanel = document.getElementById("comp_play");
+const compMoveCommentPanel = document.getElementsByClassName("comp_move")[0];
+const roundResultPanel = document.getElementById("result");
+const afterGamePanel = document.getElementsByClassName("end_game")[0];
 
-showPlayerLife.textContent = `: ${playerLife}`;
-showCompLife.textContent = `: ${computerLife}`;
+playerLifePanel.textContent = `: ${playerLife}`;
+compLifePanel.textContent = `: ${computerLife}`;
 
 function reset() {
     playerLife = 5;
     computerLife = 5;
-    showPlayerLife.textContent = `: ${playerLife}`;
-    showCompLife.textContent = `: ${computerLife}`;
-    showCompMove.textContent = "";
-    showResult.textContent = "Choose your move by clicking one of the images above";
-    showCompPlay.removeAttribute("src");
+    playerLifePanel.textContent = `: ${playerLife}`;
+    compLifePanel.textContent = `: ${computerLife}`;
+    compMoveCommentPanel.textContent = "";
+    roundResultPanel.textContent = "Choose your move by clicking one of the images above";
+    compMoveImgPanel.removeAttribute("src");
     document.getElementsByClassName("game_result")[0].remove();
     document.getElementsByClassName("temp")[0].remove();
 }
 
-function round(playerSelection) {
+function handleNextRound(playerSelection) {
     if (isGameOver()) {
         return;
     }
     const compMove = computerPlay();
     const result = playRound(playerSelection, compMove);
+    const displayedComputerMove = getDisplayedComputerMove(compMove);
 
-    showCompMove.textContent = "Computer chose " + getComputerMove(compMove);
-    showCompPlay.src = "image/" + getComputerMove(compMove) + ".jpg";
-    showResult.textContent = getResultText(result);
+    compMoveCommentPanel.textContent = "Computer chose " + displayedComputerMove;
+    compMoveImgPanel.src = "image/" + displayedComputerMove + ".jpg";
+    roundResultPanel.textContent = getResultText(result);
     deductLife(result);
 
     if (playerLife === 0) {
-        const temp1 = document.createElement("div");
-        temp1.textContent = "Imagine losing to a computer";
-        temp1.className = "game_result";
-        showAfterGame.appendChild(temp1);
+        const resultCommentPanel = document.createElement("div");
+        resultCommentPanel.textContent = "Imagine losing to a computer";
+        resultCommentPanel.className = "game_result";
+        afterGamePanel.appendChild(resultCommentPanel);
 
-        const temp2 = document.createElement("button");
-        temp2.textContent = "Play Again";
-        temp2.addEventListener("click", reset);
-        temp2.className = "temp";
-        showAfterGame.appendChild(temp2);
+        const retryButton = document.createElement("button");
+        retryButton.textContent = "Play Again";
+        retryButton.addEventListener("click", reset);
+        retryButton.className = "temp";
+        afterGamePanel.appendChild(retryButton);
     } else if (computerLife === 0) {
-        const temp1 = document.createElement("div");
-        temp1.textContent = "Congrats, You won the game";
-        temp1.className = "game_result";
-        showAfterGame.appendChild(temp1);
+        const resultCommentPanel = document.createElement("div");
+        resultCommentPanel.textContent = "Congrats, You won the game";
+        resultCommentPanel.className = "game_result";
+        afterGamePanel.appendChild(resultCommentPanel);
 
-        const temp2 = document.createElement("button");
-        temp2.textContent = "Play Again";
-        temp2.addEventListener("click", reset);
-        temp2.className = "temp";
-        showAfterGame.appendChild(temp2);
+        const retryButton = document.createElement("button");
+        retryButton.textContent = "Play Again";
+        retryButton.addEventListener("click", reset);
+        retryButton.className = "temp";
+        afterGamePanel.appendChild(retryButton);
     }
 
 }
 
-rockImg.addEventListener("click", () => round(rock));
-paperImg.addEventListener("click", () => round(paper));
-scissorsImg.addEventListener("click", () => round(scissors));
+rockImg.addEventListener("click", () => handleNextRound(ROCK));
+paperImg.addEventListener("click", () => handleNextRound(PAPER));
+scissorsImg.addEventListener("click", () => handleNextRound(SCISSORS));
