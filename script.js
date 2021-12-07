@@ -1,103 +1,115 @@
-function computerPlay() {
-    let num = 3 * Math.random();
+const rock = 0;
+const paper = 1;
+const scissors = 2;
+const draw = 0;
+const computerWin = 1;
+const playerWin = 2;
 
-    if (num < 1) {
+function computerPlay() {
+    return Math.floor(3 * Math.random());
+}
+
+function playRound(playerSelection, computerSelection) {
+    const difference = computerSelection - playerSelection;
+    return difference - Math.floor(difference / 3) * 3;
+}
+
+function getResultText(result) {
+    if (result === draw) {
+        return "Draw, try again";
+    } else if (result === computerWin) {
+        return "Computer won the round";
+    } else {
+        return "You won the round";
+    }
+}
+
+function getComputerMove(move) {
+    if (move === rock) {
         return "rock";
-    } else if (num < 2) {
+    } else if (move === paper) {
         return "paper";
     } else {
-        return "scissors";
+        return "scissors"
     }
 }
 
-function playRound(playerSelection, ComputerSelection) {
-    if (playerSelection === ComputerSelection) {
-        return "Draw, try again";
-    } else if (playerSelection === "rock") {
-        return ComputerSelection === "paper" ? "Computer won the round" : "You won the round";
-    } else if (playerSelection === "paper") {
-        return ComputerSelection === "scissors" ? "Computer won the round" : "You won the round";
-    } else if (playerSelection === "scissors") {
-        return ComputerSelection === "rock" ? "Computer won the round" : "You won the round";
-    } else {
-        return "Inelligible Input";
-    }
+function isGameOver() {
+    return playerLife === 0 || computerLife === 0;
 }
 
-function check_life() {
-    return player_life !== 0 && computer_life !== 0;
-}
-
-let player_life = 5;
-let computer_life = 5;
-const rock = document.getElementsByClassName("rock")[0];
-const paper = document.getElementsByClassName("paper")[0];
-const scissors = document.getElementsByClassName("scissors")[0];
+let playerLife = 5;
+let computerLife = 5;
+const rockImg = document.getElementsByClassName("rock")[0];
+const paperImg = document.getElementsByClassName("paper")[0];
+const scissorsImg = document.getElementsByClassName("scissors")[0];
 const showPlayerLife = document.getElementById("your_life");
 const showCompLife = document.getElementById("comp_life");
 const showCompPlay = document.getElementById("comp_play");
 const showCompMove = document.getElementsByClassName("comp_move")[0];
 const showResult = document.getElementById("result");
-const showGameResult = document.getElementById("game_result");
-const retryButton = document.getElementById("retry");
-showPlayerLife.textContent = `: ${player_life}`;
-showCompLife.textContent = `: ${computer_life}`;
+const showAfterGame = document.getElementsByClassName("end_game")[0];
+
+showPlayerLife.textContent = `: ${playerLife}`;
+showCompLife.textContent = `: ${computerLife}`;
 
 function reset() {
-    player_life = 5;
-    computer_life = 5;
-    showPlayerLife.textContent = `: ${player_life}`;
-    showCompLife.textContent = `: ${computer_life}`;
+    playerLife = 5;
+    computerLife = 5;
+    showPlayerLife.textContent = `: ${playerLife}`;
+    showCompLife.textContent = `: ${computerLife}`;
     showCompMove.textContent = "";
-    showResult.textContent = "";
-    showGameResult.textContent = "";
-    showCompPlay.removeAttribute('src');
-    document.getElementsByClassName("temp")[0].removeEventListener("click", reset);
+    showResult.textContent = "Choose your move by clicking one of the images above";
+    showCompPlay.removeAttribute("src");
+    document.getElementsByClassName("game_result")[0].remove();
     document.getElementsByClassName("temp")[0].remove();
 }
 
 function round(playerSelection) {
-    if (check_life()) {
-        const comp_move = computerPlay();
-        const result = playRound(playerSelection, comp_move);
-
-        if (comp_move === "rock") {
-            showCompPlay.src = "image/rock.jpg";
-        } else if (comp_move === "paper") {
-            showCompPlay.src = "image/paper.jpg";
-        } else {
-            showCompPlay.src = "image/scissors.jpg"
-        }
-
-        showCompMove.textContent = `Computer chose ${comp_move}`;
-
-        showResult.textContent = result;
-        if (result === "Computer won the round") {
-            player_life--;
-            showPlayerLife.textContent = `: ${player_life}`;
-        } else if (result === "You won the round") {
-            computer_life--;
-            showCompLife.textContent = `: ${computer_life}`;
-        }
-
-        if (player_life === 0) {
-            const tempButton = document.createElement("button");
-            tempButton.textContent = "Play Again";
-            tempButton.addEventListener("click", reset);
-            tempButton.className = "temp";
-            retryButton.appendChild(tempButton);
-            showGameResult.textContent = "Imagine Losing to a computer";
-        } else if (computer_life === 0) {
-            const tempButton = document.createElement("button");
-            tempButton.textContent = "Play Again";
-            tempButton.addEventListener("click", reset);
-            tempButton.className = "temp";
-            retryButton.appendChild(tempButton);
-            showGameResult.textContent = "Oh wow you win against a computer";
-        }
+    if (isGameOver()) {
+        return;
     }
+    const compMove = computerPlay();
+    const result = playRound(playerSelection, compMove);
+
+    showCompMove.textContent = "Computer chose " + getComputerMove(compMove);
+    showCompPlay.src = "image/" + getComputerMove(compMove) + ".jpg";
+    showResult.textContent = getResultText(result);
+
+    if (result === computerWin) {
+        playerLife--;
+        showPlayerLife.textContent = `: ${playerLife}`;
+    } else if (result === playerWin) {
+        computerLife--;
+        showCompLife.textContent = `: ${computerLife}`;
+    }
+
+    if (playerLife === 0) {
+        const temp1 = document.createElement("div");
+        temp1.textContent = "Imagine losing to a computer";
+        temp1.className = "game_result";
+        showAfterGame.appendChild(temp1);
+
+        const temp2 = document.createElement("button");
+        temp2.textContent = "Play Again";
+        temp2.addEventListener("click", reset);
+        temp2.className = "temp";
+        showAfterGame.appendChild(temp2);
+    } else if (computerLife === 0) {
+        const temp1 = document.createElement("div");
+        temp1.textContent = "Congrats, You won the game";
+        temp1.className = "game_result";
+        showAfterGame.appendChild(temp1);
+
+        const temp2 = document.createElement("button");
+        temp2.textContent = "Play Again";
+        temp2.addEventListener("click", reset);
+        temp2.className = "temp";
+        showAfterGame.appendChild(temp2);
+    }
+
 }
 
-rock.addEventListener('click', () => round("rock"));
-paper.addEventListener('click', () => round("paper"));
-scissors.addEventListener('click', () => round("scissors"));
+rockImg.addEventListener("click", () => round(rock));
+paperImg.addEventListener("click", () => round(paper));
+scissorsImg.addEventListener("click", () => round(scissors));

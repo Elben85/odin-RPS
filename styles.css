@@ -107,16 +107,11 @@ button {
     padding: 10px;
 }
 
-#game_result {
+.game_result {
     font-size: 30px;
     text-align: center;
-    min-width: 570px;
-    min-height: 35px;
     background: white;
     padding: 10px;
-    border: 10px solid black;
-}
-
-button:hover {
-    cursor: pointer;
+    border: 5px solid black;
+    margin-bottom: 20px;
 }
