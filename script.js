@@ -38,6 +38,16 @@ function isGameOver() {
     return playerLife === 0 || computerLife === 0;
 }
 
+function deductLife(result) {
+    if (result === computerWin) {
+        playerLife--;
+        showPlayerLife.textContent = `: ${playerLife}`;
+    } else if (result === playerWin) {
+        computerLife--;
+        showCompLife.textContent = `: ${computerLife}`;
+    }
+}
+
 let playerLife = 5;
 let computerLife = 5;
 const rockImg = document.getElementsByClassName("rock")[0];
@@ -75,14 +85,7 @@ function round(playerSelection) {
     showCompMove.textContent = "Computer chose " + getComputerMove(compMove);
     showCompPlay.src = "image/" + getComputerMove(compMove) + ".jpg";
     showResult.textContent = getResultText(result);
-
-    if (result === computerWin) {
-        playerLife--;
-        showPlayerLife.textContent = `: ${playerLife}`;
-    } else if (result === playerWin) {
-        computerLife--;
-        showCompLife.textContent = `: ${computerLife}`;
-    }
+    deductLife(result);
 
     if (playerLife === 0) {
         const temp1 = document.createElement("div");
