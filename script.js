@@ -95,30 +95,22 @@ function handleNextRound(playerSelection) {
     roundResultPanel.textContent = getResultText(result);
     deductLife(result);
 
-    if (playerLife === 0) {
-        const resultCommentPanel = document.createElement("div");
-        resultCommentPanel.textContent = "Imagine losing to a computer";
-        resultCommentPanel.className = "game_result";
-        afterGamePanel.appendChild(resultCommentPanel);
-
-        const retryButton = document.createElement("button");
-        retryButton.textContent = "Play Again";
-        retryButton.addEventListener("click", reset);
-        retryButton.className = "temp";
-        afterGamePanel.appendChild(retryButton);
-    } else if (computerLife === 0) {
-        const resultCommentPanel = document.createElement("div");
-        resultCommentPanel.textContent = "Congrats, You won the game";
-        resultCommentPanel.className = "game_result";
-        afterGamePanel.appendChild(resultCommentPanel);
-
-        const retryButton = document.createElement("button");
-        retryButton.textContent = "Play Again";
-        retryButton.addEventListener("click", reset);
-        retryButton.className = "temp";
-        afterGamePanel.appendChild(retryButton);
+    if (!isGameOver()) {
+        return;
     }
 
+    const resultCommentPanel = document.createElement("div");
+    resultCommentPanel.textContent = playerLife === 0
+        ? "Imagine losing to a computer"
+        : "Congrats, You won the game";
+    resultCommentPanel.className = "game_result";
+    afterGamePanel.appendChild(resultCommentPanel);
+
+    const retryButton = document.createElement("button");
+    retryButton.textContent = "Play Again";
+    retryButton.addEventListener("click", reset);
+    retryButton.className = "temp";
+    afterGamePanel.appendChild(retryButton);
 }
 
 rockImg.addEventListener("click", () => handleNextRound(ROCK));
