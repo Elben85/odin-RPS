@@ -1,0 +1,117 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: cyan;
+    font-size: 25px;
+    row-gap: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    width: 200px;
+    height: 200px;
+}
+
+h1 {
+    font-size: 50px;
+}
+
+.player {
+    flex-direction: column;
+    row-gap: 10px;
+    background: black;
+    padding: 10px;
+}
+
+.player * {
+    padding: 3px;
+    background: white;
+    align-self: stretch;
+    justify-content: center;
+}
+
+.option {
+    column-gap: 10px;
+    background: black;
+}
+
+.option div {
+    background: white;
+    padding: 10px;
+}
+
+.results {
+    min-height: 80px;
+    min-width: 320px;
+    padding: 10px;
+    background: white;
+    border: 10px solid black;
+}
+
+.computer {
+    height: 210px;
+    column-gap: 15px;
+    padding: 15px;
+    border: 5px solid black;
+    justify-content: flex-start;
+    min-width: 600px;
+    background: black;
+}
+
+.show_comp {
+    padding: 10px;
+    background: white;
+}
+
+.comp_text {
+    margin-left: auto;
+    align-self: stretch;
+    flex: 1 0;
+    justify-self: stretch;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    row-gap: 15px;
+}
+
+
+
+.comp_text div {
+    background: white;
+    align-self: stretch;
+    padding: 5px;
+}
+
+.comp_move {
+    flex: 1 1;
+}
+
+.end_game {
+    flex-direction: column;
+}
+
+button {
+    width: fit-content;
+    font-size: 40px;
+    color: white;
+    background: black;
+    border: 5px solid white;
+    padding: 10px;
+}
+
+.game_result {
+    font-size: 30px;
+    text-align: center;
+    background: white;
+    padding: 10px;
+    border: 5px solid black;
+    margin-bottom: 20px;
+}
